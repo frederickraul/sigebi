@@ -3,8 +3,8 @@
 @section('content')
 <style type="text/css">
     .bg-login-image{
-    background-image: url('{{url('/public/dashboard/')}}/img/undraw_Vehicle_sale_a645.svg') !important;
-    background-position: center !important;
+    background-image: url('{{url('resources/')}}/img/undraw/undraw_Books_l33t.svg') !important;
+    background-position: center 10% !important;
     background-size: 80%;
     background-repeat: no-repeat;
   }
@@ -30,56 +30,60 @@
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">¡Registrar libro!</h1>
               </div>
-              <form class="user" method="POST" action="{{ route('books.store') }}" aria-label="{{ __('Register') }}">
+              <form class="user" method="POST" action="{{ route('libros.store') }}" aria-label="{{ __('Register') }}">
               	  @csrf
                 <div class="form-group">
                   <div class="row m-0 p-0">
-                    <div class="col-md-9 col-xs-9 p-0">
-                      <label class="text-bold text-danger" style="float: left !important; position: absolute; top: 15px; left: 15px;">* </label> 
-                      <input type="text" class="pl-4 text-uppercase form-control-user form-control{{ $errors->has('stock') ? ' is-invalid' : '' }}" value="{{ old('stock') }}" id="stock" name="stock" placeholder=" Stock" readonly="true">
-                      @if ($errors->has('stock'))
+                    <div class="col-md-9 col-xs-9">
+                      <div class="md-form">
+                      <input type="text" class="text-uppercase form-control{{ $errors->has('clasificacion') ? ' is-invalid' : '' }}" value="{{ old('clasificacion') }}" id="clasificacion" name="clasificacion" readonly="true"> 
+                      <label id="claLabel" class="pl-2" style="transform: translateY(-14px) scale(0.8); }">Clasificación</label>
+                    </div>
+                  
+                      @if ($errors->has('clasificacion'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('stock') }}</strong>                            
+                            <strong>{{ $errors->first('clasificacion') }}</strong>                            
                         </span>
                     @endif
                     </div>
-                    <div class="col-md-3 col-xs-3 pr-0">
-                      <div class="btn-primary form-control-user p-3 text-center" onclick="generateStock()">
-                        <i class="fa fa-magic"></i></div>
-                    </div>
                   </div>
-                    
-                  
                 </div>
-
-                <div class="form-group hide">
+<!-- Titulo -->
+                <div class="form-group">
                   <div class="row m-0 p-0">
-                    <div class="col-md-9 col-xs-9 p-0">
-                      <label class="text-bold text-danger" style="float: left !important; position: absolute; top: 15px; left: 15px;">* </label>                 
-                      <select class="pl-4 text-uppercase form-control-select form-control
-                      {{ $errors->has('year') ? ' is-invalid' : '' }}
-                      {{ (old('year') == '') ? ' empty' : '' }}" name="year" id="year">
-                      <option value=""> Select Year</option>
-                      @foreach($years as $year)
-                      <option value="{{$year->number}}"
-                        {{ ( old('year') == $year->number) ? 'selected' : '' }}>
-                        {{$year->number}}</option>
-                      @endforeach
-                      </select>
-                      @if ($errors->has('year'))
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $errors->first('year') }}</strong>
-                      </span>
-                      @endif
+                    <div class="col-md-9 col-xs-9">
+                      <div class="md-form">
+                      <input type="text" class="text-uppercase form-control{{ $errors->has('clasificacion') ? ' is-invalid' : '' }}" value="{{ old('titulo') }}" id="titulo" name="titulo"> 
+                      <label for="titulo"><i class="text-danger"> * </i>Título</label>
                     </div>
-                    <div class="col-md-3 col-xs-3 pr-0">
-                      <div class="btn-primary form-control-user p-3 text-center" alt="New year" data-toggle="modal" data-target="#modal-addYear">
-                      <i class="fa fa-plus"></i></div>
-                    </div>                
+                  
+                      @if ($errors->has('titulo'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('titulo') }}</strong>                            
+                        </span>
+                    @endif
+                    </div>
+                  </div>
+                </div>
+<!-- Titulo -->
+                <div class="form-group">
+                  <div class="row m-0 p-0">
+                    <div class="col-md-9 col-xs-9">
+                      <div class="md-form">
+                      <input type="text" class="text-uppercase form-control{{ $errors->has('subtitulo') ? ' is-invalid' : '' }}" value="{{ old('subtitulo') }}" id="subtitulo" name="subtitulo"> 
+                      <label for="subtitulo" class="pl-2">Subtítulo</label>
+                    </div>
+                  
+                      @if ($errors->has('subtitulo'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('subtitulo') }}</strong>                            
+                        </span>
+                    @endif
+                    </div>
                   </div>
                 </div>
 
-                <div class="form-group hide">
+                <div class="form-group ">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 col-xs-9 p-0"> 
                     <label class="text-bold text-danger" style="float: left !important; position: absolute; top: 15px; left: 15px;">* </label> 
@@ -87,9 +91,7 @@
                       {{ $errors->has('make') ? ' is-invalid' : '' }}
                       {{ (old('make') == '') ? ' empty' : '' }}" name="make" id="make">
                         <option value=""> Select Make</option>
-                        @foreach($makers as $make)
-                        <option value="{{$make->id}}"{{ (old('make') == $make->id) ? 'selected' : '' }} >{{$make->name}}</option>
-                        @endforeach
+                       
                       </select>
                       @if ($errors->has('make'))
                         <span class="invalid-feedback" role="alert">
@@ -104,7 +106,7 @@
                   </div>
                 </div>
 
-                <div class="form-group hide">
+                <div class="form-group ">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 col-xs-9 p-0"> 
                       <label class="text-bold text-danger" style="float: left !important; position: absolute; top: 15px; left: 15px;">* </label> 
@@ -126,7 +128,7 @@
                   </div>
                 </div>
 
-                <div class="form-group hide">
+                <div class="form-group ">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 p-0"> 
                       <label class="text-bold text-danger" style="float: left !important; position: absolute; top: 15px; left: 15px;">* </label>
@@ -134,9 +136,7 @@
                       {{ $errors->has('category') ? ' is-invalid' : '' }}
                       {{ (old('category') == '') ? ' empty' : '' }}" name="category" id="category">
                         <option value="">Select Category</option>
-                        @foreach($categories as $category)
-                        <option value="{{$category->id}}"{{ (old('category') == $category->id) ? 'selected' : '' }} >{{$category->name}}</option>
-                        @endforeach
+                       
                       </select>
                       @if ($errors->has('category'))
                         <span class="invalid-feedback" role="alert">
@@ -151,7 +151,7 @@
                   </div>
                 </div>
 
-                <div class="form-group hide">
+                <div class="form-group ">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 p-0">
                       <input type="text" class="text-uppercase form-control-user form-control" value="{{ old('color') }}" id="color" name="color" placeholder="Color">
@@ -159,7 +159,7 @@
                   </div>
                 </div>
 
-                <div class="form-group hide">
+                <div class="form-group ">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 p-0">                   
                       <input type="text" class="text-uppercase form-control-user form-control" name="vin" value="{{ old('vin') }}" placeholder="VIN">
@@ -167,30 +167,24 @@
                   </div>
                 </div>
 
-                <div class="form-group hide">
+                <div class="form-group ">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 p-0"> 
                       <select class="text-uppercase form-control-select form-control
                       {{ (old('enginesize') == '') ? ' empty' : '' }}" name="enginesize" id="enginesize">
                         <option value="">Select ENGINE SIZE</option>
-                        @foreach($engines as $engine)
-                        <option value="{{$engine->Liters}}"
-                          {{ (old('enginesize') == $engine->Liters) ? 'selected' : '' }}>{{$engine->Liters}}L</option>
-                        @endforeach
+                       
                       </select>
                     </div>               
                   </div>
                 </div>
-                <div class="form-group hide">
+                <div class="form-group ">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 p-0"> 
                       <select class="empty text-uppercase form-control-select form-control
                       {{ (old('cylinders') == '') ? ' empty' : '' }}" name="cylinders" id="cylinders">
                         <option value="">Select CYLINDERS</option>
-                        @foreach($cylinders as $cylinder)
-                        <option value="{{$cylinder->number}}"
-                          {{ (old('cylinders') == $cylinder->number) ? 'selected' : '' }}>{{$cylinder->number}}</option>
-                        @endforeach
+                       
                       </select>
                     </div>    
                       <div class="col-md-3 col-xs-3 pr-0">
@@ -200,7 +194,7 @@
                   </div>
                 </div>
 
-                <div class="form-group hide">
+                <div class="form-group ">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 p-0"> 
                       <select class="text-uppercase form-control-select form-control
@@ -215,14 +209,14 @@
                   </div>
                 </div>
 
-                <div class="form-group hide">
+                <div class="form-group ">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 p-0"> 
                       <select class="text-uppercase form-control-select form-control
                       {{ (old('fuel') == '') ? ' empty' : '' }}" name="fuel" id="fuel">
                         <option value="">Select Fuel</option>
-                        @foreach($fuels as $fuel)
-                        <option value="{{$fuel->id}}"{{ (old('fuel') == $fuel->id) ? 'selected' : '' }} >{{$fuel->name}}</option>
+                        @foreach($autores as $autor)
+                        <option value="{{$autor->id}}"{{ (old('autor') == $autor->id) ? 'selected' : '' }} >{{$autor->nombre}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -233,7 +227,7 @@
                   </div>
                 </div>
 
-                <div class="form-group hide">
+                <div class="form-group ">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 p-0"> 
                       <select class="text-uppercase form-control-select form-control
@@ -246,7 +240,7 @@
                   </div>
                 </div>
 
-                <div class="form-group hide">
+                <div class="form-group ">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 p-0">                   
                       <input type="text" class="text-uppercase form-control-user form-control" name="description" value="{{ old('description') }}" placeholder="Description">
@@ -403,72 +397,9 @@
     </div>
   </div>
   <!-- Modal Add Category -->
-
-  <!-- Modal Add Cylinder -->
-  <div class="modal fade" id="modal-addCylinder" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-    <form id="addCylinderForm">
-      <div class="modal-content">
-        <div class="modal-header bg-danger text-white">
-          <h5 class="modal-title" id="exampleModalLabel">Need a new cylinder number?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" class="text-white">×</span>
-          </button>
-        </div>
-        <div class="modal-body"> 
-          @csrf
-          <div class="form-group">
-              <label for="number" class="col-form-label">{{ __('Cylinder number') }}</label>
-                <input id="number" type="number" class="form-control" name="number">
-                    <span class="invalid-feedback invalid-number" role="alert">
-                      <strong id="invalid-number-message"></strong>
-                    </span>
-            </div>
-          </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
-           <div class="btn btn-primary btn-sm" onclick="addCylinder()">
-            {{ __('Register') }}
-          </div>
-        </div>
-      </div>
-    </form>
-    </div>
-  </div>
-  <!-- Modal Add Cylinder -->
-
-  <!-- Modal Add Fuel -->
-  <div class="modal fade" id="modal-addFuel" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-    <form id="addFuelForm">
-      <div class="modal-content">
-        <div class="modal-header bg-danger text-white">
-          <h5 class="modal-title" id="exampleModalLabel">Need a new fuel?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" class="text-white">×</span>
-          </button>
-        </div>
-        <div class="modal-body"> 
-          @csrf
-          <div class="form-group">
-              <label for="name" class="col-form-label">{{ __('Fuel name') }}</label>
-                <input id="name" type="name" class="form-control" name="name">
-                    <span class="invalid-feedback invalid-name" role="alert">
-                      <strong id="invalid-name-message"></strong>
-                    </span>
-            </div>
-          </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
-           <div class="btn btn-primary btn-sm" onclick="addFuel()">
-            {{ __('Register') }}
-          </div>
-        </div>
-      </div>
-    </form>
-    </div>
-  </div>
-  <!-- Modal Add Fuel -->
-<!-- Modal Section -->
-<script type="text/javascript" src="{{url('public')}}/dashboard/js/inventory.js"></script>
+  <script type="text/javascript">
+    function active(){
+      $('#claLabel').addClass('active');
+    }
+  </script>
 @endsection

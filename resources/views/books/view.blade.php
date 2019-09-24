@@ -4,6 +4,10 @@
 <!-- MDBootstrap Datatables  -->
 <link href="{{url('public')}}/css/addons/datatables.min.css" rel="stylesheet">
 <style type="text/css">
+
+     .dataTables_filter{
+    display: none !important;
+   }
             .dataTables_wrapper .dataTables_processing {
             position: absolute;
             top: 30%;
@@ -53,6 +57,11 @@
         cursor: pointer important;
 
    }
+
+   .btn-sm{
+    font-size: 10px !important;
+   }
+
 }
   
 </style>
@@ -76,21 +85,28 @@
     </div>
     <div class="row bg-white m-md-4 p-md-3 pt-3">
       <div class="col-md-12 col-xs-12">
-				<a class="btn bg-primary text-light float-right">Registrar libro</a>
-         <table id="BooksTable" class="table table-striped table-primary-color" cellspacing="0" width="100%">
+				<a class="btn bg-primary text-light float-right btn-sm">Registrar libro</a>
+
+         <table id="BooksTable" class="table table-striped table-primary-color mt-lg-0 mt-md-0 mt-sm-0 mt-5" cellspacing="0" width="100%">
           <thead>
             <tr>
               <th class="th-sm">No.
               </th>
                 <th class="th-sm">
-                Clasificación
+                  <div>Clas.</div>
               </th>
-              <th class="th-lg">Título
+              <th class="th-sm">Título
+              </th>
+              <th class="th-md">Categoría
+              </th>
+              <th class="th-md">Subcategoría
               </th>
               <th class="th-sm">Estado
               </th>
               <th class="th-md">Autor
-              </th>s
+              </th>
+              <th class="th-md" data-visible="false">
+              </th>
               <th class="th-sm">
                 Acción
               </th>
@@ -135,7 +151,7 @@
 
 
 <!-- MDBootstrap Datatables  -->
-<script type="text/javascript" src="{{url('resources')}}/js/addons/datatables-es.js"></script>
+<script type="text/javascript" src="{{url('public')}}/js/addons/datatables-es.js"></script>
  <script type="text/javascript">
         $.fn.dataTable.ext.errMode = 'none';
         $.extend( $.fn.dataTable.defaults, {
@@ -153,21 +169,45 @@
         serverSide: true,
         ajax: '{!! url("books-data") !!}',
         columns: [
-            { data: 'numero', name: 'numero'},
+            { data: 'numero', name: 'numero',class: "book-number"},
             { data: 'clasificacion', name: 'clasificacion', class : "text-uppercase"},
             { data: 'titulo', name: 'titulo', class : "text-uppercase"},
+            { data: 'categoria.concepto', name: 'categoria.concepto'},
+            { data: 'subcategoria.concepto', name: 'subcategoria.concepto'},
             { data: "estado.nombre", name: 'estado.nombre', "render": function (data, type, row) { 
               if(data == "Disponible"){ return '<div class="btn bg-primary btn-sm text-light">Disponible</div>'}
               if(data == "Prestado"){ return '<div class="btn bg-secondary btn-sm text-light">Prestado</div>'}
               if(data == "Perdido"){ return '<div class="btn bg-danger btn-sm text-light">Perdido</div>'}
               }, "targets": 3 },
-            { data: 'autor.nombre', name: 'autor.nombre' },
-            { data: "id", class:"datatable-ct", "render": function (data, type, row) { 
+            { data: 'autor', name: 'autor.nombre', render: function ( data, type, row ) {
+                  if(data !== null){
+                  return data.nombre +' '+ data.apellido;
+                }
+              }},
+              { data: 'autor.apellido', name: 'autor.apellido'},
+            { data: "id", class:"datatable-ct", "render": function (data, type, row) { console.log(data);
               return '<a data-toggle="tooltip" title="Eliminar" class="pd-setting-ed text-danger ml-2"><i class="fas fa-minus-square"></i></a>'; }, "targets": 5 },
 
         ]
     });
 
+    // Add event listener for opening and closing details
+    $('#BooksTable tbody').on('click', 'tr', function () {
+        var number = $(this).find('.book-number').text();
+        console.log(number);
+        location.href ='libros/'+number+'/edit';
+ /*
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+        }*/
+    } );
  
 // #myInput is a <input type="text"> element
 $('#SearchBook').on( 'keyup', function () {

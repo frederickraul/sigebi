@@ -23,5 +23,7 @@ Route::get('books-data', 'BooksController@booksList')->name('books.data');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/category1/import/csv', 'HomeController@category1Import');
+Route::get('/category2/import/csv', 'HomeController@category2Import');
+Route::get('/category3/import/csv', 'HomeController@category3Import');
 

@@ -1,0 +1,93 @@
+﻿id,concepto,first_category_id
+10,Bibliografía ,0
+20,Bibliotecología y ciencias de la información ,0
+30,Obras enciclopédicas generales ,0
+50,Publicaciones en serie generales ,0
+60,Organizaciones generales & museología ,0
+70,"Medios noticiosos, periodismo, publicación ",0
+80,Colecciones generales ,0
+90,Manuscritos & libros raros ,0
+110,Metafísica ,100
+120,"Epistemología, causalidad, género humano ",100
+130,Fenómenos paranormales ,100
+140,Escuelas filosóficas específicas ,100
+150,Psicología ,100
+160,Lógica ,100
+170,Ética (filosofía moral) ,100
+180,"Filosofía antigua, medieval, oriental  ",100
+190,Filosofía moderna occidental ,100
+210,Filosofía y teología de la relig. ,200
+220,La Biblia ,200
+230,Cristianismo; Teología cristiana ,200
+240,Moral cristiana & teología piadosa ,200
+250,Ordenes cristianas & iglesia local ,200
+260,Teología social y eclesiástica ,200
+270,Historia del cristianismo y de la iglesia cristiana ,200
+280,Confesiones & sectas cristianas ,200
+290,Religión comparada y otras religiones  ,200
+310,Colecs. de estadística general ,300
+320,Ciencia política ,300
+330,Economía ,300
+340,Derecho ,300
+350,Administración  pública y ciencia militar ,300
+360,Problemas y servicios sociales; asociaciones ,300
+370,Educación ,300
+380,"Comercio, comunicaciones, transporte ",300
+390,"Costumbres, etiqueta, folclor ",300
+410,Lingüística ,400
+420,Inglés e inglés antiguo ,400
+430,Lenguas germánicas Alemán ,400
+440,Lenguas romances Francés ,400
+450,"Italiano, rumano, retorromano ",400
+460,Lenguas española y portuguesa ,400
+470,Lenguas itálicas Latín ,400
+480,Lenguas helénicas Griego clásico ,400
+490,Otras lenguas ,400
+510,Matemáticas ,500
+520,Astronomía y ciencias afines ,500
+530,Física ,500
+540,Química y ciencias afines ,500
+550,Ciencias de la tierra ,500
+560,"Paleontología, Paleozoología ",500
+570,Ciencias de la vida. Biología ,500
+580,Ciencias botánicas. Plantas ,500
+590,Ciencias zoológicas. Animales  ,500
+600,Tecnología (Ciencias aplicadas),600
+610,Ciencias médicas Medicina ,600
+620,Ingeniería & operacionesafines,600
+630,Agricultura y tecnologíasrelacionadas,600
+640,Economía doméstica & vidafamiliar,600
+650,Gerencia y servicios auxiliares,600
+660,Ingeniería Química ,600
+670,Manufactura ,600
+680,Manufactura para usos específicos,600
+690,Construcción ,600
+700,Las artes. Bellas artes ydecorativas,700
+710,Urbanismo & arte del paisaje ,700
+720,Arquitectura del paisaje ,700
+730,"Artes plásticas, Escultura ",700
+740,Dibujo & artes decorativas ,700
+750,Pintura & pinturas ,700
+760,"Artes gráficas, Arte de grabar y grabados",700
+770,Fotografía & fotografías ,700
+780,Música,700
+790,Artes recreativas y de la actuación,700
+800,Literatura & retórica,800
+810,Literatura norteamericana en inglés,800
+820,Literatura inglesa e inglesa antigua,800
+830,Literatura de las lenguasgermánicas,800
+840,Literaturas de las lenguas romances,800
+850,"Literaturas italiana, rumana, retorromana",800
+860,Literatura española & portuguesa,800
+870,"Literaturas itálicas, Literatura latina",800
+880,"Literaturas helénicas, Literatura griega clásica",800
+890,Literatura de otras lenguas,800
+910,Geografía y viajes,900
+920,"Biografía, genealogía, insignias",900
+930,Historia del mundo antiguo,900
+940,Historia general de Europa,900
+950,Historia general de Asia. Lejano Oriente,900
+960,Historia general de África,900
+970,Historia general de América del Norte,900
+980,Historia general de América del Sur,900
+990,Historia general de otras áreas,900

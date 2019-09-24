@@ -12,7 +12,7 @@
   <title>SIGEBI</title>
   <link rel="icon" href="{{url('/resources')}}/img/admin.png">
   <!-- Custom fonts for this template-->
-  <link href="{{url('/resources')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="{{url('/public')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <!-- css bundled using Laravel-mix, a wrapper around Webpack -->
   <link rel="stylesheet" href="{{ url('public/css/sb-admin-2.css')}}">
   <link rel="stylesheet" href="{{ url('public/css/mdb.css')}}">
@@ -62,7 +62,7 @@
         </a>
         <div id="Books" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{url('libros')}}">
+            <a class="collapse-item" href="{{url('libros/create')}}">
               <i class="fas fa-book"></i><sup><i class="fas fa-plus"></i></sup> Registrar Libro</a>
               <a class="collapse-item" href="{{url('libros')}}">
               <i class="fas fa-book"></i><sup><i class="fas fa-plus"></i></sup> Consultar Libro</a>
@@ -228,13 +228,22 @@
         </nav>
         <!-- End of Topbar -->
 
-        <!-- Include js bundle from webpack -->
-         <script src="{{url('resources')}}/vendor/jquery/jquery.min.js"></script>
-         <script src="{{url('resources')}}/js/popper.min.js"></script>
-         <script src="{{url('resources')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-         <script src="{{url('resources')}}/js/mdb.js"></script>
-         <script src="{{url('resources')}}/vendor/jquery-easing/jquery.easing.min.js"></script>
-         <script src="{{url('resources')}}/js/sb-admin-2.min.js"></script>
+         <!-- Bootstrap core JavaScript-->
+  <script src="{{url('/public')}}/vendor/jquery/jquery.min.js"></script>
+  <script src="{{url('/public')}}/js/popper.min.js"></script>
+  <script src="{{url('/public')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{{url('/public')}}/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{{url('/public')}}/js/sb-admin-2.min.js"></script>  
+
+  <script src="{{url('/public')}}/js/mdb.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="{{url('/public')}}/vendor/chart.js/Chart.min.js"></script>
+
 
   @yield('content')
         </div>

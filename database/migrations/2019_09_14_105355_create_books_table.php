@@ -21,6 +21,8 @@ class CreateBooksTable extends Migration
             $table->String('clasificacion');
             $table->String('titulo');
             $table->String('subtitulo')->nullable();
+            $table->integer('categoria');
+            $table->integer('subcategoria');
             $table->String('paginas')->nullable();
             $table->integer('autor')->nullable();
             $table->String('ejemplar',10)->nullable();

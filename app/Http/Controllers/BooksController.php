@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use DataTables;
 use App\Book;
+use App\Author;
 
 class BooksController extends Controller
 {
@@ -16,7 +17,7 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $books = Book::OrderBY('clasificacion')->paginate(20);
+        $books = Book::OrderBY('clasificacion')->paginate(50);
         return view('books/view', compact('books'));
     }
 
@@ -27,7 +28,8 @@ class BooksController extends Controller
      */
     public function create()
     {
-        //
+        $autores = Author::get();
+        return view('books/add',compact('autores'));
     }
 
     /**
@@ -92,12 +94,28 @@ class BooksController extends Controller
         Excel::load('public/book.csv', function($reader) {
  
              foreach ($reader->get() as $book) {
+            $categoria = 0;
+            $value = substr($book->clasificacion, 0, 3); 
+            $subcategoria = (int)$value;
+            if($subcategoria == 0){
+                $subcategoria =1;
+            }
+            else if($subcategoria%10 == 0){
+                $categoria = $subcategoria;
+                $subcategoria++;
+            }
+            else if($subcategoria > 10)  {
+                $res = $subcategoria%10;
+                $categoria = $subcategoria - $res;
+            }
              Book::create([
              'numero'           =>  $book->numero,
              'iniciales'        =>  $book->iniciales,
              'clasificacion'    =>  $book->clasificacion,
              'titulo'           =>  $book->titulo,
              'subtitulo'        =>  $book->subtitulo,
+             'categoria'        =>  $categoria,
+             'subcategoria'     =>  $subcategoria,
              'paginas'          =>  $book->paginas,
              'autor'            =>  $book->autor,
              'ejemplar'         =>  $book->ejemplar,
@@ -110,6 +128,6 @@ class BooksController extends Controller
     }
 
     public function booksList(){
-         return DataTables::of(Book::query()->with('autor')->with('estado'))->make(true);
+         return DataTables::of(Book::query()->with('categoria')->with('subcategoria')->with('autor')->with('estado'))->make(true);
     }
 }

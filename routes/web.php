@@ -15,10 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/*Books*/
-Route::resource('/libros','BooksController');
-Route::get('/libros/import/csv', 'BooksController@import');
-Route::get('books-data', 'BooksController@booksList')->name('books.data');
+/*Recursos*/
+Route::resource('/libros','LibrosController');
+Route::resource('/alumnos','AlumnosController');
+Route::resource('/profesores','ProfesoresController');
+Route::resource('/prestamos','PrestamosController');
+
+Route::get('/libros/import/csv', 'Api\ApiBooksController@import');
+Route::get('books-data', 'Api\ApiBooksController@booksList');
+Route::get('alumnos-data', 'Api\ApiAlumnosController@list');
+Route::get('profesores-data', 'Api\ApiProfesoresController@list');
 
 Auth::routes();
 

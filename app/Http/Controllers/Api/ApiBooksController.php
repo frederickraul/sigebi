@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use DataTables;
 use App\Book;
 use App\Author;
+use App\FirstCategory;
 
-class BooksController extends Controller
+class ApiBooksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +20,6 @@ class BooksController extends Controller
     public function index()
     {
         $books = Book::OrderBY('clasificacion')->paginate(50);
-        return view('books/view', compact('books'));
     }
 
     /**
@@ -28,8 +29,8 @@ class BooksController extends Controller
      */
     public function create()
     {
+        $categorias = FirstCategory::all();
         $autores = Author::get();
-        return view('books/add',compact('autores'));
     }
 
     /**
@@ -40,7 +41,15 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+        'clasificacion' => 'required|unique:books',
+        'titulo'  => 'required',
+        'nivel_1' => 'required',
+        'nivel_2' => 'required',
+        'nivel_3' => 'required',
+    ]);
+
+        return $request;
     }
 
     /**
@@ -128,6 +137,6 @@ class BooksController extends Controller
     }
 
     public function booksList(){
-         return DataTables::of(Book::query()->with('categoria')->with('subcategoria')->with('autor')->with('estado'))->make(true);
+         return DataTables::of(Book::query()->OrderBy('numero','desc')->with('categoria')->with('subcategoria')->with('autor')->with('estado'))->make(true);
     }
 }

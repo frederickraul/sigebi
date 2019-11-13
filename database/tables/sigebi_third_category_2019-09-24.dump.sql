@@ -9,7 +9,6 @@ BEGIN TRANSACTION;
 ----
 -- Table structure for third_category
 ----
-CREATE TABLE "third_category" ("id" integer not null primary key autoincrement, "concepto" varchar not null, "second_category_id" integer not null);
 
 ----
 -- Data dump for third_category, a total of 809 rows

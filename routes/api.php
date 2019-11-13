@@ -13,6 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::resource('/autores','Api\ApiAuthorsController');
+Route::resource('/libros','LibrosController');
+Route::resource('/alumnos','Api\ApiAlumnosController');
+Route::resource('/profesores','Api\ApiProfesoresController');
+
+/*
+*CATALOGOS
+*/
+
+//Categorias
+Route::get('/categorias/nivel1','Api\ApiCategoriasController@nivel1');
+Route::get('/categorias/nivel2/{id}','Api\ApiCategoriasController@nivel2');
+Route::get('/categorias/nivel3/{id}','Api\ApiCategoriasController@nivel3');
+
+
+

@@ -9,7 +9,6 @@ BEGIN TRANSACTION;
 ----
 -- Table structure for status
 ----
-CREATE TABLE "status" ("id" integer not null primary key autoincrement, "nombre" varchar not null);
 
 ----
 -- Data dump for status, a total of 3 rows

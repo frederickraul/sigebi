@@ -8,7 +8,8 @@
      .dataTables_filter{
     display: none !important;
    }
-            .dataTables_wrapper .dataTables_processing {
+
+  .dataTables_wrapper .dataTables_processing {
             position: absolute;
             top: 30%;
             left: 50%;
@@ -33,6 +34,10 @@
 
 
   @media (max-width: 576px) { 
+  .dataTables_wrapper .dataTables_processing {
+    width: 100%;
+    font-size: 1.2em;
+  }
   .dataTables_length{
     display: none !important;
   }
@@ -70,12 +75,11 @@
 
     <!-- Page Heading -->
     <div class="row bg-white m-md-4 p-md-3 pt-3">
-        <div class="col-md-6">
-          <h1 class="h3 mb-0 text-gray-800"><a href="{{url('/')}}">Principal</a> / Libros</h1>
+        <div class="col-md-9">
+          <h1 class="h3 mb-0 text-gray-800"><a href="{{url('/')}}">Principal</a> / Libros
+           <i class="fas fa-book"></i><sup><i class="fas fa-check"></i></sup></h1>
         </div>
-        <div class="col-md-3">
-       
-        </div>
+
         <div class="col-md-3">
           <div class="md-form p-0 m-0">
             <i class="fa fa-book prefix grey-text"></i>
@@ -85,7 +89,7 @@
     </div>
     <div class="row bg-white m-md-4 p-md-3 pt-3">
       <div class="col-md-12 col-xs-12">
-				<a class="btn bg-primary text-light float-right btn-sm">Registrar libro</a>
+				<a class="btn bg-primary text-light float-right btn-sm" href="{{url('libros/create')}}">Registrar libro</a>
 
          <table id="BooksTable" class="table table-striped table-primary-color mt-lg-0 mt-md-0 mt-sm-0 mt-5" cellspacing="0" width="100%">
           <thead>
@@ -171,7 +175,7 @@
         columns: [
             { data: 'numero', name: 'numero',class: "book-number"},
             { data: 'clasificacion', name: 'clasificacion', class : "text-uppercase"},
-            { data: 'titulo', name: 'titulo', class : "text-uppercase"},
+            { data: 'titulo', name: 'titulo', class : "text-capitalize"},
             { data: 'categoria.concepto', name: 'categoria.concepto'},
             { data: 'subcategoria.concepto', name: 'subcategoria.concepto'},
             { data: "estado.nombre", name: 'estado.nombre', "render": function (data, type, row) { 
@@ -179,14 +183,14 @@
               if(data == "Prestado"){ return '<div class="btn bg-secondary btn-sm text-light">Prestado</div>'}
               if(data == "Perdido"){ return '<div class="btn bg-danger btn-sm text-light">Perdido</div>'}
               }, "targets": 3 },
-            { data: 'autor', name: 'autor.nombre', render: function ( data, type, row ) {
+            { data: 'autor', name: 'autor.nombre', class: 'text-capitalize', render: function ( data, type, row ) {
                   if(data !== null){
                   return data.nombre +' '+ data.apellido;
                 }
               }},
               { data: 'autor.apellido', name: 'autor.apellido'},
             { data: "id", class:"datatable-ct", "render": function (data, type, row) { console.log(data);
-              return '<a data-toggle="tooltip" title="Eliminar" class="pd-setting-ed text-danger ml-2"><i class="fas fa-minus-square"></i></a>'; }, "targets": 5 },
+              return '<a data-toggle="tooltip" title="Eliminar" class="pd-setting-ed text-danger ml-2"><i class="fas fa-minus-square"></i></a>'; }, "targets": 8 },
 
         ]
     });

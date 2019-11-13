@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Book;
 use App\FirstCategory;
 use App\SecondCategory;
 use App\ThirdCategory;
@@ -26,8 +27,18 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        return view('home');
+    { 
+         $cont = 1; 
+        
+        $books = Book::OrderBy('numero')->get();
+        foreach ($books as $key => $book) {
+            if($book->numero != $cont){
+            echo $book->numero." - ".$cont; 
+            echo "<br>";
+            $cont = $book->numero;
+            }
+        $cont++;
+            }
     }
 
     public function category1Import()

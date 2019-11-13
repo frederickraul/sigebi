@@ -4,6 +4,17 @@
 <!-- MDBootstrap Datatables  -->
 <link href="{{url('public')}}/css/addons/datatables.min.css" rel="stylesheet">
 <style type="text/css">
+/*
+  #img-move{
+    transition: .7s ease-in-out 0s;
+  }
+
+  #img-move:hover{
+        transform: translate(300px,0px);
+
+  }
+  */
+
             .dataTables_wrapper .dataTables_processing {
             position: absolute;
             top: 30%;
@@ -79,7 +90,7 @@
 
                 <div class="card-body">
                   <div class="text-center">
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 40rem;" src="{{url('resources')}}/img/undraw/undraw_Bibliophile_hwqc.svg" alt="">
+                    <img id="img-move" class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 40rem;" src="{{url('resources')}}/img/undraw/undraw_Bibliophile_hwqc.svg" alt="">
                   </div>
                   <p></p>
                   

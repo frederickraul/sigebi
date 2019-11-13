@@ -9,7 +9,6 @@ BEGIN TRANSACTION;
 ----
 -- Table structure for first_category
 ----
-CREATE TABLE "first_category" ("id" integer not null primary key autoincrement, "concepto" varchar not null);
 
 ----
 -- Data dump for first_category, a total of 10 rows

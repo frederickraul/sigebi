@@ -10,7 +10,7 @@
   <meta name="author" content="">
 
   <title>SIGEBI</title>
-  <link rel="icon" href="{{url('/resources')}}/img/admin.png">
+  <link rel="icon" href="{{url('/public/images/icon.png')}}">
   <!-- Custom fonts for this template-->
   <link href="{{url('/public')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <!-- css bundled using Laravel-mix, a wrapper around Webpack -->
@@ -56,6 +56,21 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#prestamos" aria-expanded="true" aria-controls="collapseTwo">
+         <i class="fas fa-book-reader"></i>
+          <span>Prestamos</span>
+        </a>
+        <div id="prestamos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{url('prestamos/create')}}">
+              <i class="fas fa-book-reader"></i></i><sup><i class="fas fa-plus"></i></sup> Registrar Prestamo</a>
+              <a class="collapse-item" href="{{url('prestamos')}}">
+              <i class="fas fa-book-reader"></i></i><sup><i class="fas fa-check"></i></sup> Buscar Prestamo</a>
+          </div>
+        </div>
+      </li>      
+
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Books" aria-expanded="true" aria-controls="collapseTwo">
          <i class="fas fa-book"></i>
           <span>Libros</span>
@@ -65,7 +80,7 @@
             <a class="collapse-item" href="{{url('libros/create')}}">
               <i class="fas fa-book"></i><sup><i class="fas fa-plus"></i></sup> Registrar Libro</a>
               <a class="collapse-item" href="{{url('libros')}}">
-              <i class="fas fa-book"></i><sup><i class="fas fa-plus"></i></sup> Consultar Libro</a>
+              <i class="fas fa-book"></i><sup><i class="fas fa-check"></i></sup> Buscar Libro</a>
           </div>
         </div>
       </li>
@@ -78,10 +93,10 @@
         </a>
         <div id="Students" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{url('users/create')}}">
-              <i class="fas fa-user-graduate"></i><sup><i class="fas fa-plus"></i></sup> Add users</a>
-            <a class="collapse-item" href="{{url('users')}}">
-              <i class="fas fa-user-graduate"></i><sup><i class="fas fa-check"></i></sup> Check users</a>
+            <a class="collapse-item" href="{{url('alumnos/create')}}">
+              <i class="fas fa-user-graduate"></i><sup><i class="fas fa-plus"></i></sup> Registrar Alumno</a>
+            <a class="collapse-item" href="{{url('alumnos')}}">
+              <i class="fas fa-user-graduate"></i><sup><i class="fas fa-check"></i></sup> Buscar Alumno</a>
           </div>
         </div>
       </li>   
@@ -93,10 +108,10 @@
         </a>
         <div id="Teachers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{url('dashboard/users/create')}}">
-              <i class="fas fa-user-tie"></i><sup><i class="fas fa-plus"></i></sup> Add users</a>
-            <a class="collapse-item" href="{{url('dashboard/users')}}">
-             <i class="fas fa-user-tie"></i><sup><i class="fas fa-check"></i></sup> Check users</a>
+            <a class="collapse-item" href="{{url('profesores/create')}}">
+              <i class="fas fa-user-tie"></i><sup><i class="fas fa-plus"></i></sup> Registar Profesor</a>
+            <a class="collapse-item" href="{{url('profesores')}}">
+             <i class="fas fa-user-tie"></i><sup><i class="fas fa-check"></i></sup> Buscar Profesor</a>
           </div>
         </div>
       </li>
@@ -207,15 +222,6 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="{{url('dashboard/profile')}}">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Perfil
-                </a>
-                <a class="dropdown-item" href="{{url('dashboard/settings')}}">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Configuración
-                </a>
-                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Salir
@@ -285,7 +291,7 @@
         <div class="modal-body">Selecciona "salir" si estas listo para cerrar sesiòn.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" href="{{url('/logout')}}">Salir</a>
+          <a class="btn bg-primary text-white" href="{{url('/logout')}}">Salir</a>
         </div>
       </div>
     </div>

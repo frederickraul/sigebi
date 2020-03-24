@@ -82,7 +82,7 @@
 
         <div class="col-md-3">
           <div class="md-form p-0 m-0">
-            <i class="fa fa-book prefix grey-text"></i>
+            <i class="fas fa-user-graduate prefix grey-text"></i>
             <input id="SearchBook" type="text" id="materialFormCardNameEx" class="form-control" placeholder="Buscar alumno">
           </div>
         </div>
@@ -93,23 +93,25 @@
            </div>
     @endif
 
-    <div class="row bg-white m-md-4 p-md-3 pt-3">
+    <div class="row bg-white m-md-4 px-2 px-md-5 pt-4">
       <div class="col-md-12 col-xs-12">
-				<a class="btn bg-primary text-light float-right btn-sm" href="{{url('alumnos/create')}}">Registrar alumno</a>
+				<a class="btn bg-primary text-white float-right btn-sm" href="{{url('alumnos/create')}}">Registrar alumno</a>
+      </div>
 
-         <table id="TablaAlumnos" class="table table-striped table-primary-color mt-lg-0 mt-md-0 mt-sm-0 mt-5" cellspacing="0" width="100%">
-          <thead>
+      <div class="col-md-12 col-xs-12">
+         <table id="TablaAlumnos" class="table table-hover">
+          <thead class="bg-primary text-white">
             <tr>
-              <th class="th-sm">No.
+              <th>No.
               </th>
-              <th class="th-sm">
+              <th>
                 Matrícula
               </th>
-              <th class="th-sm">Nombre
+              <th>Nombre
               </th>
-              <th class="th-sm">Apellido
+              <th>Grupo
               </th>
-              <th class="th-sm">
+              <th>
                 Acción
               </th>
 
@@ -119,7 +121,7 @@
 
         </tbody>
         </table>    
-      </div>
+    </div>
   </div>
 </div>
 <!-- /.container-fluid -->
@@ -172,13 +174,13 @@
     var table = $('#TablaAlumnos').DataTable(
         {
         processing: true,
-        serverSide: true,
+        ordering: true,
         ajax: '{!! url("alumnos-data") !!}',
         columns: [
             { data: 'id', name: 'id',class: "id-number"},
             { data: 'matricula', name: 'matricula'},
             { data: 'nombre', name: 'nombre', class : "text-capitalize"},
-            { data: 'apellido', name: 'apellido', class : "text-capitalize"},
+            { data: 'grupo_id', name: 'grupo', class : "text-capitalize"},
             { data: "id", class:"datatable-ct text-center th-sm", "render": function (data, type, row) {
               return '<a data-toggle="tooltip" title="Editar" class="pd-setting-ed text-warning ml-2" onclick="editElement('+data+')"><i class="fas fa-edit"></i></a> <a data-toggle="tooltip" title="Eliminar" class="pd-setting-ed text-danger ml-2" onclick="deleteElement('+data+')"><i class="fas fa-trash" ></i></a>'; }, "targets": 5 },
         ]

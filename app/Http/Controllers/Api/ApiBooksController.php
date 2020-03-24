@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use DataTables;
 use App\Book;
-use App\Author;
+use App\Autor;
 use App\FirstCategory;
 
 class ApiBooksController extends Controller
@@ -30,7 +30,7 @@ class ApiBooksController extends Controller
     public function create()
     {
         $categorias = FirstCategory::all();
-        $autores = Author::get();
+        $autores = Autor::get();
     }
 
     /**
@@ -58,9 +58,9 @@ class ApiBooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($numero)
     {
-        //
+        return Book::where('numero', $numero)->first();
     }
 
     /**

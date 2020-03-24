@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Book;
-use App\FirstCategory;
-use App\SecondCategory;
-use App\ThirdCategory;
+use Kreait\Firebase;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -18,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth');            
     }
 
     /**
@@ -27,67 +25,54 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    { 
-         $cont = 1; 
+    {
         
-        $books = Book::OrderBy('numero')->get();
-        foreach ($books as $key => $book) {
-            if($book->numero != $cont){
-            echo $book->numero." - ".$cont; 
-            echo "<br>";
-            $cont = $book->numero;
-            }
-        $cont++;
-            }
+        $user = Auth::user();
+        if ($user->role() != "docente") {
+                return redirect('/a/');
+        }
+
+        return view('home');
     }
 
-    public function category1Import()
-    {
-        set_time_limit(0);
-        Excel::load('public/FirstCategory.csv', function($reader) {
- 
-             foreach ($reader->get() as $category) {
+    public function sendNotification(){
+        $title = 'Hola Testing';
+        $body = 'Ponte a trabajar';
+        $imageUrl = 'http://microz.tech/logo.png';
 
-             FirstCategory::create([
-             'id'           =>      $category->id,
-             'concepto'        =>  $category->concepto,
-             ]);
-               }
-         });
-         return FirstCategory::all();
-    }    
 
-    public function category2Import()
-    {
-        set_time_limit(0);
-        Excel::load('public/SecondCategory.csv', function($reader) {
- 
-             foreach ($reader->get() as $category) {
+        $deviceToken = "esI5uRrBhOQ:APA91bFLpbAZJDIuraAHOBw-3H1qNjSt6wi1Eeu_GaQTXQ9dWnh4z1oRCKdxmnzQ1ctur7oxpdmt4yi7zcfOyBkn2qu6cMHx5arVaYAihyhv0fUWnJi_IxIdo6nyuSJfp2Uhf-ou_Idk";
+        $deviceToken2 = "fkInoj9e3B8:APA91bFbbyK2idg2EmxVug4j3FhvYgJy0eH8NUi-BlywLkU-fANmg328it65Pj1t79lNSf9gmc5HFomrcQdhWX3m3s5rZmOSLg6-4JN-NAnjNUAdjeR0ksdurB0haKIeNEMzznZrvJ5L";
 
-             SecondCategory::create([
-             'id'           =>      $category->id,
-             'concepto'        =>  $category->concepto,
-             'first_category_id'        =>  $category->first_category_id,
-             ]);
-               }
-         });
-         return SecondCategory::all();
+        $tokens = [$deviceToken, $deviceToken2];
+        $messaging = (new Firebase\Factory())->createMessaging();
+
+        //Especific Device
+            $message = CloudMessage::withTarget('token', $deviceToken)
+            ->withNotification([
+                                'title' => $title,
+                                'body' => $body,
+                                'image' => $imageUrl,
+                            ]) // optional
+            ->withData(['key' => 'value']);
+
+        $messaging->send($message);
+
+        //Multiples Devices
+
+        $message = CloudMessage::
+            new([
+                                'title' => $title,
+                                'body' => $body,
+                                'image' => $imageUrl,
+                            ]) // optional
+            ->withData(['key' => 'value']);
+
+        $messaging->sendMulticast($message, $tokens);
+
     }
 
-    public function category3Import()
-    {
-        set_time_limit(0);
-        Excel::load('public/ThirdCategory.csv', function($reader) {
- 
-             foreach ($reader->get() as $category) {
-
-             ThirdCategory::create([
-             'id'               =>      $category->id,
-             'concepto'         =>      $category->concepto,
-             'second_category_id'        =>  $category->second_category_id,
-             ]);
-               }
-         });
-         return ThirdCategory::all();
+    public function memoria(){
+        return view('juegosDidacticos.memoria');
     }
 }

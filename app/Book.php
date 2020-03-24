@@ -10,7 +10,7 @@ class Book extends Model
     protected $fillable = ['numero', 'iniciales', 'clasificacion', 'titulo', 'subtitulo', 'categoria','subcategoria','paginas', 'autor', 'ejemplar', 'volumen','estado'];
 
     public function Autor(){
-    	return $this->hasOne('App\Author','id','autor');
+    	return $this->hasOne('App\Autor','id','autor');
     }
 
     public function Estado(){

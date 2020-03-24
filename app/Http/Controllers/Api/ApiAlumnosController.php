@@ -11,6 +11,7 @@ class ApiAlumnosController extends Controller
 {
      public function index()
     {
+       return DataTables::of(Alumno::query()->OrderBy('nombre'))->make(true);
     }
 
     /**

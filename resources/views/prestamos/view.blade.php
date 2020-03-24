@@ -76,17 +76,22 @@
     <!-- Page Heading -->
     <div class="row bg-white m-md-4 p-md-3 pt-3">
         <div class="col-md-9">
-          <h1 class="h3 mb-0 text-gray-800"><a href="{{url('/')}}">Principal</a> / Alumnos
-           <i class="fas fa-user-graduate"></i><sup><i class="fas fa-check"></i></sup></h1>
+          <h1 class="h3 mb-0 text-gray-800"><a href="{{url('/')}}">Principal</a> / Prestamos
+           <i class="fas fa-book-reader"></i></h1>
         </div>
 
         <div class="col-md-3">
           <div class="md-form p-0 m-0">
-            <i class="fa fa-book prefix grey-text"></i>
-            <input id="SearchBook" type="text" id="materialFormCardNameEx" class="form-control" placeholder="Buscar alumno">
+            <i class="fas fa-book-reader prefix grey-text"></i>
+            <input id="SearchBook" type="text" id="materialFormCardNameEx" class="form-control" placeholder="Buscar prestamo">
           </div>
         </div>
     </div>
+    @if(session()->has('create'))
+           <div class="alert alert-success mx-md-4">
+             <h4 class="h4">{{session('create')}}</h4>
+           </div>
+    @endif
      @if(session()->has('delete'))
            <div class="alert alert-warning mx-md-4">
              <h4 class="h4">{{session('delete')}}</h4>
@@ -95,19 +100,25 @@
 
     <div class="row bg-white m-md-4 p-md-3 pt-3">
       <div class="col-md-12 col-xs-12">
-				<a class="btn bg-primary text-light float-right btn-sm" href="{{url('alumnos/create')}}">Registrar alumno</a>
+				<a class="btn bg-primary text-light float-right btn-sm" href="{{url('prestamos/create')}}">Registrar prestamo</a>
 
-         <table id="TablaAlumnos" class="table table-striped table-primary-color mt-lg-0 mt-md-0 mt-sm-0 mt-5" cellspacing="0" width="100%">
+         <table id="TablaPrestamos" class="table table-striped table-primary-color mt-lg-0 mt-md-0 mt-sm-0 mt-5" cellspacing="0" width="100%">
           <thead>
             <tr>
               <th class="th-sm">No.
               </th>
               <th class="th-sm">
-                Matrícula
+                Tipo
               </th>
-              <th class="th-sm">Nombre
+              <th class="th-sm">Usuario
               </th>
-              <th class="th-sm">Apellido
+              <th class="th-sm">Libro
+              </th>
+              <th class="th-sm">Estado
+              </th>
+              <th class="th-sm">Fecha Prestamo
+              </th>
+               <th class="th-sm">Fecha Entrega
               </th>
               <th class="th-sm">
                 Acción
@@ -124,40 +135,10 @@
 </div>
 <!-- /.container-fluid -->
 <!-- Modal Windows -->
-  <!-- Modal Delete Car -->
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-    <form id="deleteForm" method="POST" action="">
-      <div class="modal-content">
-        <div class="modal-header bg-danger text-white">
-          <h5 class="modal-title" id="exampleModalLabel">¿Necesitas eliminar el registro del alumno?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" class="text-white">×</span>
-          </button>
-        </div>
-        <div class="modal-body"> 
-          @csrf
-            <h6 class="h6" id="matricula">Matrícula: </h6>
-            <h6 class="h6" id="nombre">Nombre: </h6>
-            <br>
-            <h6 class="h6">¿Estas seguro?</h6>
-            <input type="hidden" name="id" id="id">
-            <input name="_method" type="hidden" value="delete">
-
-          </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
-           <button class="btn bg-danger btn-sm text-white"> Confirmar </button>
-          </div>
-        </div>
-          </form>
-      </div>
-    </div>
-<!-- Modal Windows -->
-
 
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="{{url('public')}}/js/addons/datatables-es.js"></script>
+<script type="text/javascript" src="{{url('public')}}/js/moment-with-locales.js"></script>
  <script type="text/javascript">
         $.fn.dataTable.ext.errMode = 'none';
         $.extend( $.fn.dataTable.defaults, {
@@ -169,45 +150,37 @@
     </script>
     <script type="text/javascript">
 
-    var table = $('#TablaAlumnos').DataTable(
+    var table = $('#TablaPrestamos').DataTable(
         {
         processing: true,
         serverSide: true,
-        ajax: '{!! url("alumnos-data") !!}',
+        ajax: '{!! url("prestamos-data") !!}',
         columns: [
             { data: 'id', name: 'id',class: "id-number"},
-            { data: 'matricula', name: 'matricula'},
-            { data: 'nombre', name: 'nombre', class : "text-capitalize"},
-            { data: 'apellido', name: 'apellido', class : "text-capitalize"},
+            { data: 'tipo', name: 'tipo'},
+            { data: 'usuario', name: 'usuario'},
+            { data: 'libro', name: 'libro', class : "text-capitalize"},
+            { data: 'estado', name: 'estado', "render": function (data, type, row) {
+              if(data == 1){ return '<div class="btn bg-primary btn-sm text-light">Entregado</div>'}
+              if(data == 0){ return '<div class="btn bg-secondary btn-sm text-light">Pendiente</div>'}
+              if(data == "Perdido"){ return '<div class="btn bg-danger btn-sm text-light">Perdido</div>'}}, "targets": 4 },
+            { data: 'created_at', name: 'created_at', "render": function (data) {
+              return  moment(data).locale('es').format('MMM Do YYYY'); }, "targets": 5 },
+            { data: 'entrega', name: 'entrega', class : "text-capitalize", "render": function (data) {
+              return  moment(data).locale('es').format('MMM Do YYYY'); }, "targets": 6 },
             { data: "id", class:"datatable-ct text-center th-sm", "render": function (data, type, row) {
-              return '<a data-toggle="tooltip" title="Editar" class="pd-setting-ed text-warning ml-2" onclick="editElement('+data+')"><i class="fas fa-edit"></i></a> <a data-toggle="tooltip" title="Eliminar" class="pd-setting-ed text-danger ml-2" onclick="deleteElement('+data+')"><i class="fas fa-trash" ></i></a>'; }, "targets": 5 },
+              return '<a data-toggle="tooltip" title="Editar" class="pd-setting-ed text-warning ml-2" onclick="editElement('+data+')"><i class="fas fa-edit"></i></a>'; }, "targets": 7 },
         ]
     });
 
 function editElement(id){
-  location.href ='alumnos/'+id+'/edit';
-}
-
-function deleteElement(id){
-  var id = id;
-  url = '{!!url("/api/alumnos")!!}'+"/"+id;
-  $.ajax({
-    url: url,
-    type: 'GET',
-    success: function(data){
-      $("#id").val(data.id);
-      $("#nombre").html("<b>Nombre: </b>"+data.nombre+","+data.apellido);
-      $("#matricula").html("<b>Matrícula: </b>"+data.matricula);
-    }
-  });
-
-  $("#deleteForm").attr('action','alumnos/'+id);
-  $('#confirmDeleteModal').modal('show');
+  location.href ='prestamos/'+id+'/edit';
 }
  
 // #myInput is a <input type="text"> element
 $('#SearchBook').on( 'keyup', function () {
     table.search( this.value ).draw();
+    console.log(this.value);
 } );
 </script>
   @endsection

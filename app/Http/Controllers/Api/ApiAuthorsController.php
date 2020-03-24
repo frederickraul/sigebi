@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
-use App\Author;
+use App\Autor;
 
 
 class ApiAuthorsController extends Controller
@@ -17,7 +17,7 @@ class ApiAuthorsController extends Controller
      */
     public function index()
     {
-        return Author::OrderBy('nombre','asc')->OrderBy('apellido','asc')->get();
+        return Autor::OrderBy('nombre','asc')->OrderBy('apellido','asc')->paginate(50);
     }
 
     /**
@@ -38,17 +38,16 @@ class ApiAuthorsController extends Controller
      */
     public function store(Request $request)
     {
-
         $data = $request->all();
-         $this->validate($request, [
-        'nombre' => 'required',
-        'apellido' => 'required|min:3',
-        ]);
+             $this->validate($request, [
+            'nombre' => 'required|min:3',
+            ]);
+    
 
          $nombre = Str::lower($data['nombre']);
          $apellido = Str::lower($data['apellido']);
 
-         $autor = Author::where('nombre',$nombre)
+         $autor = Autor::where('nombre',$nombre)
                         ->where('apellido',$apellido)
                         ->first();
         if(count($autor) > 0){
@@ -61,7 +60,7 @@ class ApiAuthorsController extends Controller
             ]);
         }
 
-         $autor = new Author;
+         $autor = new Autor;
          $autor->nombre = $nombre;
          $autor->apellido = $apellido;
          if($autor->save()){
@@ -83,7 +82,7 @@ class ApiAuthorsController extends Controller
      */
     public function show($id)
     {
-        return Author::find($id);
+        return Autor::find($id);
     }
 
     /**

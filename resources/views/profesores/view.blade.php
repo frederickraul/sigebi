@@ -82,7 +82,7 @@
 
         <div class="col-md-3">
           <div class="md-form p-0 m-0">
-            <i class="fa fa-book prefix grey-text"></i>
+            <i class="fas fa-user-tie prefix grey-text"></i>
             <input id="SearchBook" type="text" id="materialFormCardNameEx" class="form-control" placeholder="Buscar profesor">
           </div>
         </div>
@@ -158,6 +158,15 @@
 
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="{{url('public')}}/js/addons/datatables-es.js"></script>
+<!-- Button -->
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+<!-- Button -->
  <script type="text/javascript">
         $.fn.dataTable.ext.errMode = 'none';
         $.extend( $.fn.dataTable.defaults, {
@@ -174,6 +183,11 @@
         processing: true,
         serverSide: true,
         ajax: '{!! url("profesores-data") !!}',
+        dom: 'Bfrtip',
+        buttons: [
+            { "extend": 'excel', "text":'<i class="fas fa-file-excel fa-2x"></i>',"className": 'btn btn-success btn-xs' },
+            { "extend": 'pdf', "text":'<i class="fas fa-file-pdf fa-2x"></i>',"className": 'btn btn-danger btn-xs' }
+        ],
         columns: [
             { data: 'id', name: 'id',class: "id-number"},
             { data: 'numero', name: 'numero'},

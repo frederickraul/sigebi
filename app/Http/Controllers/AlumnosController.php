@@ -3,9 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Auth;
 use App\Alumno;
+use App\User;
+use App\Role;
 class AlumnosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('teacherOnly');
+    }
+
      public function index()
     {
         return view('alumnos/view');
@@ -123,6 +133,88 @@ class AlumnosController extends Controller
     {
         Alumno::find($id)->delete();
         return redirect()->to('alumnos')->with('delete','El registro del alumno ha sido eliminado.');    
+    }
+
+    public function import()
+    {
+        set_time_limit(0);
+        Excel::load('public/alumnos.csv', function($reader) {
+        $i=1;
+        foreach ($reader->get() as $alumno) {
+
+            $user = User::where('numero',$alumno->matricula)->first();
+             if($user){
+                $user->name = $alumno->nombre;
+                $user->update();
+
+                  $alum = Alumno::where('user_id', $user->id)->first();
+                    if($alum){
+                        $alum->matricula = $alumno->matricula;
+                        $alum->nombre    = $alumno->nombre;
+                        $alum->grupo_id  = $alumno->grupo;
+                        $alum->update();
+                    }
+                    else{
+                        $alum = new Alumno();
+                        $alum->matricula = $alumno->matricula;
+                        $alum->nombre    = $alumno->nombre;
+                        $alum->grupo_id  = $alumno->grupo;
+                        $alum->user_id  =  $user->id;
+                         $alum->save();
+                    }
+
+             }else{
+                $user = new User;
+                $user->name     = $alumno->nombre;
+                $user->numero   = $alumno->matricula;
+                $user->password   = "123";
+                $user->save();
+                 $user
+                ->roles()
+                ->attach(Role::where('name', 'alumno')->first());
+
+                $alum = Alumno::where('matricula', $user->id)->first();
+                    if($alum){
+                        $alum->matricula = $alumno->matricula;
+                        $alum->nombre    = $alumno->nombre;
+                        $alum->grupo_id  = $alumno->grupo;
+                        $alum->update();
+                    }
+                    else{
+                        $alum = new Alumno();
+                        $alum->matricula = $alumno->matricula;
+                        $alum->nombre    = $alumno->nombre;
+                        $alum->grupo_id  = $alumno->grupo;
+                        $alum->user_id  =  $user->id;
+                    }
+             }
+
+             echo $i++." ".$alum->nombre." ".$alum->grupo."<br>";
+
+             
+               
+               }
+         });
+         
+    }
+
+    public function verify()
+    {
+        $users = User::all();
+        foreach ($users as $user) {
+            $alumno = Alumno::where('user_id', $user->id)->first();
+            if($alumno){
+                $alumno->nombre = $user->name;
+                $alumno->update();
+                echo $alumno->nombre." ".$alumno->grupo['grupo']."<br>";
+            }else{
+                $alumno = new Alumno;
+                $alumno->matricula  = $user->numero;
+                $alumno->nombre     = $user->name;
+                $alumno->update();
+                echo "nuevo--".$alumno->nombre." ".$alumno->grupo['grupo']."<br>";
+            }
+        }
     }
 
 }

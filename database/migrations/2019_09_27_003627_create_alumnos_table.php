@@ -15,11 +15,11 @@ class CreateAlumnosTable extends Migration
     {
         Schema::create('alumnos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('foto');
+            $table->text('foto')->nullable;
             $table->integer('matricula')->unique();
-            $table->String('nombre');
-            $table->String('apellido');
-            $table->String('grupo');
+            $table->String('nombre')->nullable;;
+            $table->String('apellido')->nullable;;
+            $table->integer('grupo_id');
             $table->timestamps();
         });
     }

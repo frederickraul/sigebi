@@ -9,22 +9,27 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <title>SIGEDI</title>
+  <link rel="icon" href="{{url('/public/images/icon-md.png')}}">
+  <!-- Custom fonts for this template-->
+  <link href="{{url('/public')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <!-- css bundled using Laravel-mix, a wrapper around Webpack -->
+  <link rel="stylesheet" href="{{ url('public/css/sb-admin-2.css')}}">
+  <link rel="stylesheet" href="{{ url('public/css/mdb.css')}}">
+  <link rel="stylesheet" href="{{ url('public/css/style-dashboard.css')}}">
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    SIGEDI
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -45,7 +50,9 @@
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
+                                    <!--
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                -->
                                 </li>
                             @endif
                         @else

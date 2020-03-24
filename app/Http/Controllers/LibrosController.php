@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use DataTables;
 use App\Book;
-use App\Author;
+use App\Autor;
 use App\FirstCategory;
 use App\SecondCategory;
 use App\ThirdCategory;
@@ -26,7 +26,7 @@ class LibrosController extends Controller
     public function create()
     {
         $categorias = FirstCategory::all();
-        $autores = Author::get();
+        $autores = Autor::OrderBy('apellido')->get();
         return view('libros/add',compact('autores','categorias'));
     }
 
@@ -48,6 +48,7 @@ class LibrosController extends Controller
         'nivel_3' => 'required',
     ]);
 
+        return $datos;
         $max = Book::max('numero');
         $numero = $max + 1;
         $book = new Book;
@@ -81,7 +82,7 @@ class LibrosController extends Controller
     public function edit($id)
     {
         $categorias = FirstCategory::all();
-        $autores = Author::get();
+        $autores = Autor::OrderBy('apellido')->get();
         $libro = Book::where('numero',$id)->firstOrFail();
         return view('libros/details',compact('libro','autores','categorias'));
 
@@ -97,8 +98,7 @@ class LibrosController extends Controller
     public function update(Request $request, $id)
     {
         $datos = $request->all();
-        $book = Book::find($id);
-
+        $book = Book::where('numero',$id)->firstOrFail();
         if($book->clasificacion == $datos['clasificacion']){
             $request->validate([
             'autor'  => 'required',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Prestamo;
 
 class PrestamosController extends Controller
 {
@@ -13,7 +14,12 @@ class PrestamosController extends Controller
      */
     public function index()
     {
-        //
+        return view('prestamos.view');
+    }
+
+    public function record()
+    {
+        return view('prestamos.record');
     }
 
     /**
@@ -23,7 +29,7 @@ class PrestamosController extends Controller
      */
     public function create()
     {
-        return view('prestamos/add');
+        return view('prestamos.add');
     }
 
     /**
@@ -34,7 +40,16 @@ class PrestamosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datos = $request->all();
+        $prestamo = new Prestamo;
+        $prestamo->tipo = $datos['tipo'];
+        $prestamo->usuario = $datos['usuario'];
+        $prestamo->grupo = $datos['grupo'];
+        $prestamo->libro = $datos['libro'];
+        $prestamo->entrega = $datos['fecha'];
+        $prestamo->estado = 0;
+        $prestamo->save();
+        return redirect()->to('prestamos')->with('create','El prestamo ha sido registrado.'); 
     }
 
     /**
@@ -56,7 +71,8 @@ class PrestamosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $element = Prestamo::find($id);
+        return view('prestamos.edit',compact('element'));
     }
 
     /**
@@ -68,7 +84,10 @@ class PrestamosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $element = Prestamo::find($id);
+        $element->estado = 1;
+        $element->update();
+        return redirect()->to('prestamos/historial');
     }
 
     /**

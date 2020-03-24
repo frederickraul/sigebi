@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'SIGEBI'),
+    'name' => env('APP_NAME', 'SIGEDI'),
 
     /*
     |--------------------------------------------------------------------------
@@ -165,6 +165,13 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         /* Datatable Server Side */
         Yajra\DataTables\DataTablesServiceProvider::class,
+        /* FCM */
+        Kreait\Laravel\Firebase\ServiceProvider::class,
+        //JWT AUTH
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+
+
+
 
         /*
          * Package Service Providers...
@@ -233,8 +240,9 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         /* Datatable Server Side */
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        
-
+        //JWT AUTH
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class, 
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];

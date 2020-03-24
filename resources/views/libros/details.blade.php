@@ -41,8 +41,9 @@
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-5">Datos del libro!</h1>
               </div>
-              <form class="user" method="POST" action="{{route('libros.update',$libro->id) }}" aria-label="{{ __('Actualizar') }}">
+              <form class="user" method="POST" action="{{route('libros.update',$libro->numero) }}" aria-label="{{ __('Actualizar') }}">
               	  @csrf
+                <input type="hidden" name="_method" value="PUT">
                 <div class="form-group">
                   <div class="row m-0 p-0">
                     <div class="col-md-9 col-xs-9">
@@ -96,7 +97,7 @@
                             <option value=""> Autor</option>
                             @foreach($autores as $autor)
                               <option value="{{$autor->id}}" 
-                                {{ ( $libro->autor == $autor->id) ? 'selected' : '' }}> {{$autor->apellido}}, {{$autor->nombre}}</option>
+                                {{ ( $libro->autor == $autor->id) ? 'selected' : '' }}>@if($autor->apellido != ""){{$autor->apellido.", "}}@endif{{$autor->nombre}}</option>
                             @endforeach
                            
                           </select>
@@ -197,8 +198,8 @@
                   <div class="row m-0 p-0">
                     <div class="col-md-9 col-xs-9">
                       <div class="md-form">
-                      <input type="number" class="text-capitalize form-control{{ $errors->has('paginas') ? ' is-invalid' : '' }}" value="{{ old('paginas') }}" id="paginas" name="paginas"> 
-                      <label for="paginas" class="pl-2 text-bolder{{ old('paginas') != '' ? ' active' : '' }}"> Páginas</label>
+                      <input type="number" class="text-capitalize form-control{{ $errors->has('paginas') ? ' is-invalid' : '' }}" value="{{ old('paginas', $libro->paginas) }}" id="paginas" name="paginas"> 
+                      <label for="paginas" class="pl-2 text-bolder active"> Páginas</label>
                     </div>
                   
                     </div>
@@ -209,8 +210,8 @@
                   <div class="row m-0 p-0">
                     <div class="col-md-9 col-xs-9">
                       <div class="md-form">
-                      <input type="number" class="text-capitalize form-control{{ $errors->has('ejemplar') ? ' is-invalid' : '' }}" value="{{ old('ejemplar') }}" id="ejemplar" name="ejemplar"> 
-                      <label for="ejemplar" class="pl-2 text-bolder{{ old('ejemplar') != '' ? ' active' : '' }}"> Ejemplar</label>
+                      <input type="number" class="text-capitalize form-control{{ $errors->has('ejemplar') ? ' is-invalid' : '' }}" value="{{ old('ejemplar',$libro->ejemplar) }}" id="ejemplar" name="ejemplar"> 
+                      <label for="ejemplar" class="pl-2 text-bolder active"> Ejemplar</label>
                     </div>
 
                     </div>
@@ -221,8 +222,8 @@
                   <div class="row m-0 p-0">
                     <div class="col-md-9 col-xs-9">
                       <div class="md-form">
-                      <input type="number" class="text-capitalize form-control{{ $errors->has('volumen') ? ' is-invalid' : '' }}" value="{{ old('volumen') }}" id="volumen" name="volumen"> 
-                      <label for="volumen" class="pl-2 text-bolder{{ old('volumen') != '' ? ' active' : '' }}"> Volumen</label>
+                      <input type="number" class="text-capitalize form-control{{ $errors->has('volumen') ? ' is-invalid' : '' }}" value="{{ old('volumen', $libro->volumen) }}" id="volumen" name="volumen"> 
+                      <label for="volumen" class="pl-2 text-bolder active"> Volumen</label>
                     </div>
                     </div>
                   </div>
@@ -312,8 +313,13 @@
     categoria = nivel_3;
   }
   var ini           = '{!! old('iniciales',$libro->iniciales) !!}';
-  var volumen       ="";
-  var ejemplar      ="";
+  if($("#volumen").val() !=""){
+    var volumen       = ' V.'+'{!! old('volumen', $libro->volumen) !!}';
+  }
+    if($("#ejemplar").val() !=""){
+
+  var ejemplar      =' E.'+'{!! old('ejemplar',$libro->ejemplar) !!}';
+}
    $(document).ready(function(){
       nivel_1 = $("#nivel_1").find('option:selected').val();
       if(nivel_1 != ''){
@@ -324,6 +330,25 @@
       }
       
   });
+
+     $( "#volumen" ).on("input", function () { 
+     if(this.value != ""){ 
+      volumen = " V."+this.value;
+      }else{
+        volumen = "";
+      }
+      calcularClasificacion();
+     });  
+
+      $( "#ejemplar" ).on("input", function () {  
+        if(this.value != ""){
+          ejemplar = " E."+this.value;
+        }else{
+          ejemplar ="";
+        }
+        
+      calcularClasificacion();
+     });
 
      $( "select" ).change(function () {    
     id = $(this).closest('select').attr('id');
@@ -366,11 +391,7 @@
         calcularClasificacion()
         break;
         case "autor":
-        autor = $(this).find('option:selected').text();
-        console.log(autor);
-        ini = autor.substring(1,4);
-        $("#iniciales").val(ini);
-        calcularClasificacion()
+
         break;
         }
       });

@@ -156,6 +156,15 @@
 
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="{{url('public')}}/js/addons/datatables-es.js"></script>
+<!-- Button -->
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+<!-- Button -->
  <script type="text/javascript">
         $.fn.dataTable.ext.errMode = 'none';
         $.extend( $.fn.dataTable.defaults, {
@@ -172,6 +181,11 @@
         processing: true,
         serverSide: true,
         ajax: '{!! url("books-data") !!}',
+        dom: 'Bfrtip',
+        buttons: [
+            { "extend": 'excel', "text":'<i class="fas fa-file-excel fa-2x"></i>',"className": 'btn btn-success btn-xs' },
+            { "extend": 'pdf', "text":'<i class="fas fa-file-pdf fa-2x"></i>',"className": 'btn btn-danger btn-xs' }
+        ],
         columns: [
             { data: 'numero', name: 'numero',class: "book-number"},
             { data: 'clasificacion', name: 'clasificacion', class : "text-uppercase"},
@@ -190,7 +204,7 @@
               }},
               { data: 'autor.apellido', name: 'autor.apellido'},
             { data: "id", class:"datatable-ct", "render": function (data, type, row) { console.log(data);
-              return '<a data-toggle="tooltip" title="Eliminar" class="pd-setting-ed text-danger ml-2"><i class="fas fa-minus-square"></i></a>'; }, "targets": 8 },
+              return '<a data-toggle="tooltip" title="Editar" class="pd-setting-ed text-warning ml-2"><i class="fas fa-edit"></i></a>'; }, "targets": 8 },
 
         ]
     });

@@ -92,7 +92,7 @@
                             <option value=""> Autor</option>
                             @foreach($autores as $autor)
                               <option value="{{$autor->id}}" 
-                                {{ (old('autor') == $autor->id) ? 'selected' : '' }}> {{$autor->apellido}}, {{$autor->nombre}}</option>
+                                {{ (old('autor') == $autor->id) ? 'selected' : '' }}> @if($autor->apellido != ""){{$autor->apellido.", "}}@endif{{$autor->nombre}}</option>
                             @endforeach
                            
                           </select>
@@ -218,7 +218,7 @@
                     </div>
                   </div>
                 </div>
-                <input id="iniciales" type="hidden" name="iniciales">
+                <input id="iniciales" type="hidden" name="iniciales" value="{{ old('iniciales') }}">
                 <hr>
                     <div class="form-group text-right pt-3">
                  <button type="submit" class="btn text-white bg-primary btn-sm">
@@ -314,6 +314,25 @@
       
   });
 
+     $( "#volumen" ).on("input", function () { 
+     if(this.value != ""){ 
+      volumen = " V."+this.value;
+      }else{
+        volumen = "";
+      }
+      calcularClasificacion();
+     });  
+
+      $( "#ejemplar" ).on("input", function () {  
+        if(this.value != ""){
+          ejemplar = " E."+this.value;
+        }else{
+          ejemplar ="";
+        }
+        
+      calcularClasificacion();
+     });
+
      $( "select" ).change(function () {    
     id = $(this).closest('select').attr('id');
     value = $("#"+id).val();
@@ -356,8 +375,9 @@
         break;
         case "autor":
         autor = $(this).find('option:selected').text();
-        console.log(autor);
-        ini = autor.substring(1,4);
+        value = clearSpace(autor);
+        console.log(value);
+        ini = value.substring(0,3);
         $("#iniciales").val(ini);
         calcularClasificacion()
         break;
@@ -417,7 +437,14 @@
         }
       });
     }
+function  clearSpace(cadena){
+  cadena = cadena.trim();
+  cadena1 = cadena.replace('.','');
+  cadena2 = cadena1.replace(',','');
+  cadena3 = cadena2.replace(' ','');
 
+  return cadena3;
+}
 function addAutor(){
        var formDataValues = document.forms.namedItem("addAutorForm");
             var formValues = new FormData(formDataValues);
@@ -436,14 +463,32 @@ function addAutor(){
                         $('#autor').removeClass('empty');  
                       }
                       else{
-                         $('#autor').append($('<option>',
-                         {
-                            value: data.id,
-                            text : data.apellido+", "+data.nombre
-                          }));
+                        if(data.apellido != ""){
+                           name = clearSpace(data.apellido+", "+data.nombre);
+                           ini = name.substring(0,3);
+
+                           $('#autor').append($('<option>',
+                           {
+                              value: data.id,
+                              text : " "+data.apellido+", "+data.nombre
+                            }));
+                        }
+                        else{
+                           ini = data.nombre.substring(0,3);
+                           $('#autor').append($('<option>',
+                           {
+                              value: data.id,
+                              text : " "+data.nombre
+                            }));
+                        }
                       $("#autor option[value='"+data.id+"']").prop('selected', true);
                         $('#modal-registrarAutor').modal('hide');
-                        $('#autor').removeClass('empty');                      }
+                        $('#autor').removeClass('empty');                      
+                        //Calculamos iniciales
+                         $("#iniciales").val(ini);
+                        calcularClasificacion()
+
+                      }
                      
                     },
                     error: function(e) {

@@ -9,15 +9,22 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SIGEBI</title>
-  <link rel="icon" href="{{url('/public/images/icon.png')}}">
+  <title>SIGEDI</title>
+  <link rel="icon" href="{{url('/public/images/icon-md.png')}}">
   <!-- Custom fonts for this template-->
   <link href="{{url('/public')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <!-- css bundled using Laravel-mix, a wrapper around Webpack -->
   <link rel="stylesheet" href="{{ url('public/css/sb-admin-2.css')}}">
   <link rel="stylesheet" href="{{ url('public/css/mdb.css')}}">
   <link rel="stylesheet" href="{{ url('public/css/style-dashboard.css')}}">
-
+  <!--Import materialize.css-->
+  <style type="text/css">
+     @media (max-width: 576px) { 
+    .h3{
+      font-size: 16px !important;
+    }
+  }
+  </style>
 
 
 
@@ -33,14 +40,14 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav sidebar sidebar-light sidebar-primary accordion" id="accordionSidebar">
+    <ul class="navbar-nav sidebar sidebar-primary accordion toggled" id="accordionSidebar">
       <div class="sticky-top">
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('/')}}">
         <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-graduation-cap text-primary"></i>
+          <i class="text-primary"><img src="{{url('/public/images/icon-md.png')}}" style="width: 50px;height: 50px;"></i>
         </div>
-        <div class="sidebar-brand-text mx-3 text-primary h3 text-bold m-0">SIGEBI</div>
+        <div class="sidebar-brand-text mx-2 text-primary h3 text-bold m-0">SIGEDI</div>
       </a>
 
       <!-- Divider -->
@@ -56,68 +63,57 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#prestamos" aria-expanded="true" aria-controls="collapseTwo">
-         <i class="fas fa-book-reader"></i>
-          <span>Prestamos</span>
+        <a class="nav-link" href="{{url('clases')}}" aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-pencil-alt"></i>
+          <span>Clases</span>
         </a>
-        <div id="prestamos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{url('prestamos/create')}}">
-              <i class="fas fa-book-reader"></i></i><sup><i class="fas fa-plus"></i></sup> Registrar Prestamo</a>
-              <a class="collapse-item" href="{{url('prestamos')}}">
-              <i class="fas fa-book-reader"></i></i><sup><i class="fas fa-check"></i></sup> Buscar Prestamo</a>
-          </div>
-        </div>
-      </li>      
+      </li>       
 
+      <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Books" aria-expanded="true" aria-controls="collapseTwo">
-         <i class="fas fa-book"></i>
-          <span>Libros</span>
+        <a class="nav-link" href="{{url('aulas')}}" aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-object-group"></i>
+          <span>Aulas</span>
         </a>
-        <div id="Books" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{url('libros/create')}}">
-              <i class="fas fa-book"></i><sup><i class="fas fa-plus"></i></sup> Registrar Libro</a>
-              <a class="collapse-item" href="{{url('libros')}}">
-              <i class="fas fa-book"></i><sup><i class="fas fa-check"></i></sup> Buscar Libro</a>
-          </div>
-        </div>
-      </li>
+      </li>  
+      
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('examenes')}}" aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-dice-d20"></i>
+          <span>Examenes</span>
+        </a>
+      </li>    
 
             <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Students" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link" href="{{url('alumnos')}}" aria-expanded="true" aria-controls="collapseTwo">
          <i class="fas fa-user-graduate"></i>
           <span>Alumnos</span>
         </a>
-        <div id="Students" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+
+
+      </li>            
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#catalogos" aria-expanded="true" aria-controls="collapseTwo">
+         <i class="fas fa-th"></i>
+          <span>Catalogos</span>
+        </a>
+        <div id="catalogos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{url('alumnos/create')}}">
-              <i class="fas fa-user-graduate"></i><sup><i class="fas fa-plus"></i></sup> Registrar Alumno</a>
-            <a class="collapse-item" href="{{url('alumnos')}}">
-              <i class="fas fa-user-graduate"></i><sup><i class="fas fa-check"></i></sup> Buscar Alumno</a>
+            <a class="collapse-item" href="{{url('catalogos/periodos')}}">
+              <i class="far fa-calendar-alt"></i> Periodos</a>
+
+             <a class="collapse-item" href="{{url('catalogos/asignaturas')}}">
+              <i class="fas fa-swatchbook"></i> Asignaturas</a>  
+
+              <a class="collapse-item" href="{{url('catalogos/grupos')}}">
+              <i class="fas fa-users"></i> Grupos</a>       
           </div>
         </div>
       </li>   
-               <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Teachers" aria-expanded="true" aria-controls="collapseTwo">
-         <i class="fas fa-user-tie"></i>
-          <span>Profesores</span>
-        </a>
-        <div id="Teachers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{url('profesores/create')}}">
-              <i class="fas fa-user-tie"></i><sup><i class="fas fa-plus"></i></sup> Registar Profesor</a>
-            <a class="collapse-item" href="{{url('profesores')}}">
-             <i class="fas fa-user-tie"></i><sup><i class="fas fa-check"></i></sup> Buscar Profesor</a>
-          </div>
-        </div>
-      </li>
-
-
-
+      
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -130,7 +126,7 @@
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content-wrapper" class="d-flex flex-column bg-gradient-light-2">
 
       <!-- Main Content -->
       <div id="content">
@@ -162,7 +158,7 @@
               <!-- Dropdown - Alerts -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
-                  Alerts Center
+                  Mensajes
                 </h6>
                 @foreach($logs as $log)
                 <a class="dropdown-item d-flex align-items-center" href="{{url('/logs/update/status')}}">
@@ -205,7 +201,7 @@
                   </div>
                 </a>
                 @endforeach
-                <a class="dropdown-item text-center small text-gray-500" href="{{url('/logs')}}">Show Activity Log</a>
+                <a class="dropdown-item text-center small text-gray-500" href="{{url('/mensaje')}}">Mostrar todos los mensajes</a>
               </div>
             </li>
 
@@ -213,16 +209,20 @@
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
+            <li class="nav-item dropdown dropdown-primary">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> </span>
-                <img class="img-profile rounded-circle" src="{{url('/resources')}}/img/users/zak.jpg">
-                 <label class="m-2 text-white"> Prof. Zak Fonseca <i class="fas fa-angle-down ml-2"></i></label>
+                @if(Auth::user()->foto != "")
+                <img class="img-profile rounded-circle" src="{{url('/').'/'.Auth::user()->foto}}"> 
+                @else
+                <img class="img-profile rounded-circle" src="{{url('/resources')}}/img/undraw/gold-undraw_male_avatar_323b.svg">
+                @endif
+                 <label class="m-2 text-white"> {{ Auth::user()->name }} </label>
 
               </a>
               <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" style="max-width: 75px;">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal" >
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Salir
                 </a>
@@ -260,7 +260,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Raúl Fonseca 2019</span>
+            <span>Copyright &copy; Raúl Fonseca <script>document.write(new Date().getFullYear());</script> </span>
           </div>
         </div>
       </footer>
@@ -282,6 +282,8 @@
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
+         <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                        @csrf
         <div class="modal-header bg-primary text-white">
           <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -290,9 +292,12 @@
         </div>
         <div class="modal-body">Selecciona "salir" si estas listo para cerrar sesiòn.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn bg-primary text-white" href="{{url('/logout')}}">Salir</a>
+          
+                                   
+          <div class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</div>
+          <button type="submit" class="btn bg-primary btn-sm text-white">Salir</button>
         </div>
+        </form>
       </div>
     </div>
   </div>
